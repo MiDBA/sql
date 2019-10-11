@@ -1,0 +1,4 @@
+exec DBMS_SERVICE.DELETE_SERVICE('nytd_ts');
+exec dbms_utility.compile_schema(schema=>'SOSINV',compile_all=>TRUE,reuse_settings =>TRUE);
+exec DBMS_STATS.GATHER_SCHEMA_STATS (ownname => 'SOSINV',estimate_percent => 1);
+    
