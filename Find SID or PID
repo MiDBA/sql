@@ -1,0 +1,25 @@
+--Find Session Info from O.S. PID
+SELECT
+    pdb.name,s.service_name,s.con_id,s.inst_id,s.sid,s.serial#,s.username,s.status,s.osuser,s.process,s.machine,s.program,s.action,s.logon_time,s.event,s.state,
+    p.spid,p.pname,p.username,p.serial#,p.program, p.tracefile,p.con_id,p.inst_id
+from gv$session s,
+     gv$process p,
+     v$pdbs pdb
+WHERE
+    s.paddr = p.addr
+    and s.inst_id=p.inst_id
+    and pdb.con_id=s.con_id
+    AND p.spid = '212626'
+
+--Find PID from Session info
+SELECT
+    pdb.name,s.service_name,s.con_id,p.spid,s.inst_id,s.sid,s.serial#,s.username,s.status,s.osuser,s.process,s.machine,s.program,s.action,s.logon_time,s.event,s.state,
+    p.spid,p.pname,p.username,p.serial#,p.program, p.tracefile,p.con_id,p.inst_id
+from gv$session s,
+     gv$process p,
+     v$pdbs pdb
+WHERE
+    s.paddr = p.addr
+    and s.inst_id=p.inst_id
+    and pdb.con_id=s.con_id
+    AND s.sid = '267'
