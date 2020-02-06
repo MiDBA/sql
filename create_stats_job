@@ -1,0 +1,32 @@
+BEGIN
+    DBMS_SCHEDULER.CREATE_JOB (
+            job_name => '"LOWEJEF2"."GEN_STATS_SIGDEV"',
+            job_type => 'STORED_PROCEDURE',
+            job_action => 'SYS.DBMS_STATS.GATHER_SCHEMA_STATS',
+            number_of_arguments => 18,
+            start_date => NULL,
+            repeat_interval => 'FREQ=WEEKLY;BYTIME=090000;BYDAY=SAT',
+            end_date => NULL,
+            enabled => FALSE,
+            auto_drop => FALSE,
+            comments => 'Gen_Stats_SIGDEV');
+
+    DBMS_SCHEDULER.SET_JOB_ARGUMENT_VALUE( 
+             job_name => '"LOWEJEF2"."GEN_STATS_SIGDEV"', 
+             argument_position => 1, 
+             argument_value => 'SIGDEV');
+    DBMS_SCHEDULER.SET_JOB_ARGUMENT_VALUE( 
+             job_name => '"LOWEJEF2"."GEN_STATS_SIGDEV"', 
+             argument_position => 2, 
+             argument_value => '1');
+ 
+    DBMS_SCHEDULER.SET_ATTRIBUTE( 
+             name => '"LOWEJEF2"."GEN_STATS_SIGDEV"', 
+             attribute => 'store_output', value => TRUE);
+    DBMS_SCHEDULER.SET_ATTRIBUTE( 
+             name => '"LOWEJEF2"."GEN_STATS_SIGDEV"', 
+             attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
+      
+	DBMS_SCHEDULER.enable(
+             name => '"LOWEJEF2"."GEN_STATS_SIGDEV"');
+END;
