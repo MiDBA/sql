@@ -3,7 +3,7 @@ BEGIN
             job_name => '"LOWEJEF2"."GEN_STATS_SIGDEV"',
             job_type => 'STORED_PROCEDURE',
             job_action => 'SYS.DBMS_STATS.GATHER_SCHEMA_STATS',
-            number_of_arguments => 18,
+            number_of_arguments => 2,
             start_date => NULL,
             repeat_interval => 'FREQ=WEEKLY;BYTIME=090000;BYDAY=SAT',
             end_date => NULL,
