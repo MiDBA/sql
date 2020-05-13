@@ -1,0 +1,7 @@
+select 'create user '||u.name||' identified by values '''||spare4||''' DEFAULT TABLESPACE '||d.default_tablespace||' quota unlimited on '
+||d.default_tablespace ||' TEMPORARY TABLESPACE '||d.temporary_tablespace||' profile '||d.profile||';'
+from sys.user$ u, sys.dba_users d
+where u.name=d.username
+and type#=1
+and d.username ='USERNAME'
+and spare4 not like 'S:  
