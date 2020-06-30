@@ -1,0 +1,47 @@
+variable id number;
+begin
+  declare
+  name varchar2(100);
+  tab_name varchar2(100);
+  descr varchar2(500);
+  obj_id number;
+  cursor tab_cursor is select table_name from dba_tables where num_rows > 100000 and owner='UC4ADMIN';
+  
+  begin
+  name:='UC4ADMINd';
+  descr:='Segment_Advisor';
+
+
+  dbms_advisor.create_task (
+    advisor_name     => 'Segment Advisor',
+    task_id          => :id,
+    task_name        => name,
+    task_desc        => descr); 
+    
+OPEN tab_cursor;
+  LOOP
+    FETCH tab_cursor INTO tab_name;
+    EXIT WHEN tab_cursor%NOTFOUND;
+    
+  dbms_advisor.create_object (
+    task_name        => name,
+    object_type      => 'TABLE',
+    attr1            => 'UC4ADMIN',
+    attr2            => tab_name,
+    attr3            => NULL,
+    attr4            => NULL,
+    attr5            => NULL,
+    object_id        => obj_id);
+  END LOOP;
+  CLOSE tab_cursor;
+
+  dbms_advisor.set_task_parameter(
+    task_name        => name,
+    parameter        => 'recommend_all',
+    value            => 'TRUE');
+
+  dbms_advisor.execute_task(name);
+  end;
+end; 
+/
+
